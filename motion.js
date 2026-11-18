@@ -4,19 +4,17 @@
   const intro = document.querySelector('.intro-section');
   const work = document.querySelector('.work');
   const thread = document.querySelector('.scroll-thread');
-  const threadMaskPath = document.querySelector('.scroll-thread-mask-path');
   const threadArtPath = document.querySelector('.scroll-thread-art');
   const silkCanvas = document.querySelector('.motion-silk-canvas');
   const cleanup = [];
   const lineProgress = { value: 0 };
-  const track = { width: 1920, height: 1974, startY: 7.693, endY: 1859.39, top: 0, scale: 1, samples: [] };
+  const track = { stageTop: 0, workTop: 0, width: 1920, height: 1974, startY: 7.693, endY: 1859.39, top: 0, scale: 1, samples: [] };
   const trackCenterline = 'M -13.805 7.693 C 182.6685 57.0639 376.777 149.373 529.738 255.727 C 682.699 374.225 794.513 493.342 820.9405 607.542 C 846.72 664.71 842.86 722.156 811.5 774.386 C 714 861 589 882 502.3865 861.246 C 458.805 850.8 424.421 829.882 406.95 801.975 C 389.48 774.07 388.925 739.169 406.22 696.514 C 442.637 653.486 481.2265 612.642 535.6855 589.484 C 590.144 566.327 660.472 560.856 753.5845 584.3245 C 1035.5 668.64 1164.58 759.52 1229.885 853.1815 C 1295.185 946.848 1296.71 1043.305 1248.5 1117.89 C 1199.375 1193.89 1148.435 1241.48 1098.45 1272.47 C 1048.475 1303.465 999.45 1317.855 954.166 1327.45 C 931.5235 1332.245 909.8155 1335.845 889.388 1339.72 C 868.961 1343.59 849.815 1347.74 832.2965 1353.645 C 797.26 1365.45 768.736 1384.265 749.5 1421.89 C 685.21 1547.64 674.085 1734.135 834.783 1850.635 C 915.1315 1920.89 1038.435 1949.635 1219.53 1956.54 C 1400.62 1963.82 1639.5 1936.51 1951 1859.39';
   let trackPathLength = 1;
   let scheduleTrackReveal = () => {};
 
   const positionThread = () => {
-    if (!stage || !intro || !work || !thread || !threadMaskPath || !threadArtPath) return;
-    threadMaskPath.setAttribute('d', trackCenterline);
+    if (!stage || !intro || !work || !thread || !threadArtPath) return;
     threadArtPath.setAttribute('d', trackCenterline);
     const visualFrame = intro.querySelector('.intro-visual');
     if (visualFrame) {
@@ -37,15 +35,29 @@
     track.scale = scale || 1;
     track.top = startDocumentY - stageDocumentTop - track.startY * track.scale;
     thread.style.top = `${track.top}px`;
-    trackPathLength = threadMaskPath.getTotalLength();
-    threadMaskPath.style.strokeDasharray = `${trackPathLength}`;
-    threadMaskPath.style.strokeDashoffset = `${trackPathLength * (1 - lineProgress.value)}`;
-    const sampleCount = 1800;
-    track.samples = Array.from({ length: sampleCount + 1 }, (_, index) => {
+    trackPathLength = threadArtPath.getTotalLength();
+    threadArtPath.style.strokeDasharray = `${trackPathLength}`;
+    threadArtPath.style.strokeDashoffset = `${trackPathLength * (1 - lineProgress.value)}`;
+    const sampleCount = 1200;
+    // Scroll position is mapped to a strictly increasing "scroll weight" along the path.
+    // Segments that run backwards or sideways still consume some scroll distance, so the
+    // line never jumps across loops of the curve.
+    let previousPoint = threadArtPath.getPointAtLength(0);
+    let weight = 0;
+    track.samples = [{ progress: 0, weight: 0 }];
+    for (let index = 1; index <= sampleCount; index += 1) {
       const progress = index / sampleCount;
-      const point = threadMaskPath.getPointAtLength(trackPathLength * progress);
-      return { progress, y: point.y };
-    });
+      const point = threadArtPath.getPointAtLength(trackPathLength * progress);
+      const dy = point.y - previousPoint.y;
+      const dl = Math.hypot(point.x - previousPoint.x, dy);
+      weight += Math.max(dy, dl * .4);
+      track.samples.push({ progress, weight });
+      previousPoint = point;
+    }
+    track.totalWeight = weight || 1;
+    track.samples.forEach((sample) => { sample.weight /= track.totalWeight; });
+    track.workTop = window.scrollY + work.getBoundingClientRect().top;
+    track.stageTop = stageDocumentTop;
     scheduleTrackReveal();
   };
 
@@ -62,36 +74,39 @@
   }
 
   const initTrackReveal = () => {
-    if (!stage || !thread || !threadMaskPath || !intro || reduceMotion) return;
+    if (!stage || !thread || !threadArtPath || !intro || reduceMotion) return;
     const firstLine = intro.querySelector('.intro-title span');
     const lineShift = window.matchMedia('(max-width: 760px)').matches ? 24 : 62;
     let raf = 0;
     let previousFrame = 0;
     const draw = (now) => {
       raf = 0;
-      const stageDocumentTop = window.scrollY + stage.getBoundingClientRect().top;
-      const trackTopDocumentY = stageDocumentTop + track.top;
+      const trackTopDocumentY = track.stageTop + track.top;
       const aimedDocumentY = window.scrollY + window.innerHeight * .57;
       const targetY = (aimedDocumentY - trackTopDocumentY) / track.scale;
-      let targetProgress = lineProgress.value;
-      let bestScore = Infinity;
-      for (const sample of track.samples) {
-        const score = Math.abs(sample.y - targetY) + Math.abs(sample.progress - lineProgress.value) * 120;
-        if (score < bestScore) {
-          bestScore = score;
-          targetProgress = sample.progress;
-        }
+      const wanted = Math.max(0, Math.min(1, (targetY - track.startY) / (track.endY - track.startY)));
+      const samples = track.samples;
+      let low = 0;
+      let high = samples.length - 1;
+      while (low < high) {
+        const mid = (low + high) >> 1;
+        if (samples[mid].weight < wanted) low = mid + 1; else high = mid;
       }
-      const workDocumentTop = window.scrollY + work.getBoundingClientRect().top;
-      const finishStart = workDocumentTop - window.innerHeight * 1.55;
-      const finishEnd = workDocumentTop - window.innerHeight * .68;
+      let targetProgress = samples[low].progress;
+      if (low > 0) {
+        const before = samples[low - 1];
+        const span = samples[low].weight - before.weight || 1;
+        targetProgress = before.progress + (samples[low].progress - before.progress) * ((wanted - before.weight) / span);
+      }
+      const finishStart = track.workTop - window.innerHeight * 1.55;
+      const finishEnd = track.workTop - window.innerHeight * .68;
       const finishProgress = Math.max(0, Math.min(1, (window.scrollY - finishStart) / Math.max(1, finishEnd - finishStart)));
       targetProgress = Math.max(targetProgress, finishProgress);
       const elapsed = Math.min(50, Math.max(1, previousFrame ? now - previousFrame : 16));
       previousFrame = now;
-      const smoothing = 1 - Math.exp(-(elapsed / 1000) / .035);
+      const smoothing = 1 - Math.exp(-(elapsed / 1000) / .11);
       lineProgress.value += (targetProgress - lineProgress.value) * smoothing;
-      threadMaskPath.style.strokeDashoffset = `${trackPathLength * (1 - lineProgress.value)}`;
+      threadArtPath.style.strokeDashoffset = `${trackPathLength * (1 - lineProgress.value)}`;
       if (firstLine) firstLine.style.transform = `translate3d(${(lineShift * lineProgress.value).toFixed(2)}px,0,0)`;
       thread.classList.add('is-ready');
       if (Math.abs(targetProgress - lineProgress.value) > .00015) raf = requestAnimationFrame(draw);

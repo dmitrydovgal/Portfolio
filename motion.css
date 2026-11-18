@@ -5,8 +5,7 @@
 .scroll-thread{position:absolute;z-index:0;top:0;left:0;width:100%;height:auto;aspect-ratio:1920/1974;overflow:visible;pointer-events:none;visibility:hidden}
 .scroll-thread.is-ready{visibility:visible}
 .scroll-thread-image{display:block;width:100%;height:100%}
-.scroll-thread-mask-path{stroke-dasharray:1;stroke-dashoffset:1;stroke-width:32}
-.scroll-thread-art{fill:none;stroke:url(#scrollTrackGradient);stroke-width:32;stroke-linecap:round;stroke-linejoin:round}
+.scroll-thread-art{will-change:stroke-dashoffset;fill:none;stroke:url(#scrollTrackGradient);stroke-width:32;stroke-linecap:round;stroke-linejoin:round}
 .intro-title,.intro-detail-row,.work-title,.project-grid--figma{position:relative;z-index:1}
 .intro-title span:first-child{will-change:transform}
 .intro-visual{position:relative;overflow:hidden;background:#050B19}
