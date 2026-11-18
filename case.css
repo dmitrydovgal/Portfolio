@@ -387,3 +387,17 @@ body.theme-splitbill{--blue:#FF7751;background:#FBFAF6}
 .theme-splitbill .case-header .main-nav a:hover,.theme-splitbill .case-footer a:hover{color:#FF7751}
 .theme-splitbill .case-back:hover,.theme-splitbill .case-back:focus-visible,.theme-splitbill .beexpay-live-link:hover{background:#FF7751!important;border-color:#FF7751!important;color:#0b0b0b!important}
 .theme-splitbill{--up-accent:#FF7751;--up-hover-ink:#0b0b0b}
+
+/* CrocoBit gallery */
+.case-page--crocobit .case-overview h2,.case-page--crocobit .crocobit-brief h2,.case-page--crocobit .crocobit-deliverables h2,.case-page--crocobit .crocobit-gallery-heading h2{font-family:Manrope,"DM Sans",sans-serif;font-size:clamp(38px,4.4vw,64px);font-weight:600;letter-spacing:-.06em;line-height:.98;margin:16px 0 0}
+.crocobit-gallery{padding-top:clamp(64px,9vw,128px)}
+.crocobit-gallery-heading{margin-bottom:clamp(30px,5vw,68px)}
+.crocobit-gallery-heading h2{margin-top:0!important}
+.crocobit-shot{margin:0 0 clamp(34px,5vw,70px)}
+.crocobit-shot img{display:block;width:100%;height:auto;border-radius:clamp(14px,2vw,28px);background:#050807;box-shadow:0 24px 80px #19ff1114}
+.case-page--crocobit .crocobit-shot img{width:100%;max-width:100%;height:auto;object-fit:cover}
+.crocobit-shot.reveal-on-scroll{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.crocobit-shot.reveal-on-scroll.is-visible{opacity:1;transform:translateY(0)}
+.crocobit-shot img{box-shadow:0 24px 80px #19ff1114}
+.crocobit-gallery-heading h2{color:#f2f7f1}
+@media(prefers-reduced-motion:reduce){.crocobit-shot.reveal-on-scroll{opacity:1;transform:none}}

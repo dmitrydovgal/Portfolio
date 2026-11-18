@@ -4,7 +4,7 @@
     { id:'eva-dex', title:'EVADEX', summary:'Web3 platform for DEX trading', category:'WEB3 · DEX TRADING', image:'./assets/cases/evadex-case-01.webp', alt:'EVADEX multi-chain DEX trading platform homepage and dashboard' },
     { id:'superearn', title:'SuperEarn App', summary:'Non-custodial, multichain, portal to decentralized finance and SUPER app.', category:'MULTICHAIN APP', image:'./assets/cases/superearn-project-01.webp', alt:'SuperEarn wallet onboarding and portfolio screens' },
     { id:'splitbill', title:'Split Bill', summary:'Telegram Mini App for splitting restaurant bills with friends — scan a receipt, pick your items and track who has paid.', category:'TELEGRAM MINI APP · PRODUCT DESIGN', image:'./assets/cases/splitbill-case-01.webp', alt:'Split Bill Telegram Mini App — home, shared bill and bill summary screens' },
-    { id:'crocobit', title:'CrocoBit', summary:'Crypto-trading GameFi platform', category:'GAMEFI PLATFORM', image:'./assets/cases/crocobit-01.webp', alt:'CrocoBit crypto trading GameFi website' },
+    { id:'crocobit', title:'CrocoBit', summary:'A game dashboard for a crypto-trading GameFi platform: wallet, NFT mint, team rewards and history.', category:'GAMEFI · WEB3 DASHBOARD', image:'./assets/cases/crocobit-case-01.webp', alt:'CrocoBit game dashboard and Mystery NFT box screens' },
     { id:'artbot', title:'ArtBot', summary:'AI LegalTech platform for legal and migration support', category:'AI · LEGALTECH', image:'./assets/cases/artbot-case-01.webp', alt:'ArtBot AI LegalTech platform homepage and assistant interface' }
   ];
   const projectId = new URLSearchParams(location.search).get('project');
@@ -16,7 +16,7 @@
     'eva-dex': { scope:'DEX product experience, trading dashboards and multi-chain workflows', status:'Product design case', timeline:'1 month', outcome:'A unified workspace for token discovery, market analysis, portfolio tracking and trade automation.', metrics:[['+21%','reach growth'],['+14%','engagement growth'],['+11%','conversion growth']] },
     'superearn': { scope:'Non-custodial DeFi app and responsive product website', status:'Live product link · design case', timeline:'2 months', outcome:'A connected journey across yield discovery, staking, swaps, bridges and portfolio management.', metrics:[['+16%','reach growth'],['+13%','engagement growth'],['+8%','activation growth']] },
     splitbill: { scope:'Telegram Mini App: receipt upload and OCR, item selection, payment tracking, invitations and a personal account', status:'MVP · design and front-end', timeline:'Nov 2026', outcome:'A calm thirteen-screen flow that turns a restaurant receipt into a shared bill where everyone sees exactly what they owe.', metricsLabel:'At a glance', metrics:[['13','core screens'],['3','OCR languages'],['0','money held by the app']] },
-    crocobit: { scope:'GameFi platform, NFT collection and token-based features', status:'Live website · GameFi design case', timeline:'3 months', outcome:'A connected product concept linking NFT collecting, racing gameplay and token rewards.', metrics:[['+23%','reach growth'],['+15%','engagement growth'],['+12%','conversion growth']] },
+    crocobit: { scope:'Game dashboard, NFT mint flow, team and referral screens, responsive layouts', status:'Live website · dashboard design case', timeline:'3 months', outcome:'A dark, neon-lit control room where players manage a wallet, mint NFT heroes, grow a referral team and follow every reward.', metrics:[['+23%','reach growth'],['+15%','engagement growth'],['+12%','conversion growth']] },
     artbot: { scope:'AI LegalTech MVP, assistant chat and specialist handoff flows', status:'MVP design concept', timeline:'2 months', outcome:'A clear service flow from AI guidance and document preparation to specialist support.', metrics:[['+17%','reach growth'],['+12%','engagement growth'],['+9%','conversion growth']] },
     beexpay: { metrics:[['+18%','reach growth'],['+12%','engagement growth'],['+9%','activation growth']] }
   };
@@ -96,15 +96,15 @@
       document.querySelector('#overview-copy').textContent = 'SuperEarn connects users with yield-generating DeFi pools across multiple blockchains. The platform brings staking, restaking, liquidity pools, swaps and bridges into one interface, with tools to compare opportunities and track rewards while users retain control of their assets.';
     }
     if (project.id === 'crocobit') {
-      document.querySelector('meta[name="description"]').content = 'CrocoBit case study: a blockchain GameFi platform combining an NFT collection, crypto racing game, staking, farming and token swaps.';
+      document.querySelector('meta[name="description"]').content = 'CrocoBit case study: the game dashboard of a blockchain GameFi platform — wallet, Mystery NFT box, team and referral program, operation history and responsive layouts.';
       document.querySelector('meta[name="theme-color"]').content = '#050807';
       document.body.classList.add('theme-crocobit');
       const page = document.querySelector('#case-content');
       page.classList.add('case-page--crocobit');
-      document.querySelector('#case-summary').textContent = 'A blockchain GameFi platform combining a racing game for traders, NFT collectibles, staking, farming and token swaps.';
-      document.querySelector('#case-caption').textContent = 'CrocoBit — GameFi platform';
-      document.querySelector('#overview-title').textContent = 'A GameFi ecosystem built around racing and NFTs';
-      document.querySelector('#overview-copy').textContent = 'CrocoBit brings together a custom NFT collection, a racing game for crypto traders, token swaps and reward mechanics for NFT holders. The concept creates a shared space for trading, collecting and playing, with blockchain assets at the center of the experience.';
+      document.querySelector('#case-summary').textContent = 'A game dashboard for a crypto-trading GameFi platform: wallet, NFT mint, team rewards and history in one neon-lit control room.';
+      document.querySelector('#case-caption').textContent = 'CrocoBit — game dashboard';
+      document.querySelector('#overview-title').textContent = 'A control room for a GameFi ecosystem';
+      document.querySelector('#overview-copy').textContent = 'CrocoBit brings an NFT collection, a racing game for crypto traders and token rewards into one dashboard. Players connect a wallet, mint a hero from the Mystery NFT box, invite a team through a referral link and follow every operation, from staking income to incentive-program progress.';
       const liveLink = document.createElement('a');
       liveLink.className = 'beexpay-live-link';
       liveLink.href = 'https://crocobit.net/';
@@ -116,11 +116,15 @@
       detail.className = 'crocobit-details';
       detail.innerHTML = `
         <section class="crocobit-brief reveal-on-scroll">
-          <div><p class="case-eyebrow">THE CHALLENGE</p><h2>Bring traders, NFT collectors and players into one world.</h2></div>
-          <div class="crocobit-brief-copy"><p>The goal was to create a blockchain space that gives crypto traders and gaming enthusiasts more ways to interact with digital assets through play, collecting and token-based rewards.</p><p>The experience needed to connect the NFT collection with racing gameplay, holder rewards, token swaps and a referral system.</p></div>
+          <div><p class="case-eyebrow">THE CHALLENGE</p><h2>Make a complex crypto game feel clear.</h2></div>
+          <div class="crocobit-brief-copy"><p>A player has to juggle a wallet, NFTs, staking, a referral team and a race — all with real money involved. The dashboard needed to show balances, rewards and operations at a glance without overwhelming newcomers.</p><p>The design language had to feel like a game, yet stay precise and trustworthy: every amount, hash and status readable, and every next step obvious.</p></div>
         </section>
-        <section class="crocobit-deliverables reveal-on-scroll"><div><p class="case-eyebrow">WHAT WAS CREATED</p><h2>Collect, race and earn with on-chain assets.</h2></div><ul class="crocobit-list"><li>An original NFT collection of unique digital artifacts.</li><li>An online racing game for crypto traders.</li><li>NFT-based car upgrades that connect collectibles to gameplay.</li><li>Staking and farming mechanics that let NFT holders earn additional tokens.</li><li>A token swap experience designed for low-friction exchange.</li><li>A referral program with bonuses and rewards for bringing new users to the platform.</li></ul></section>
-        <section class="crocobit-stack reveal-on-scroll"><div><p class="case-eyebrow">TECHNOLOGY</p><h2>Built for BNB Smart Chain.</h2></div><div class="crocobit-stack-copy"><p>Solidity · Node.js · React · JavaScript · Web3</p><p>Blockchain: BSC</p></div></section>`;
+        <section class="crocobit-deliverables reveal-on-scroll"><div><p class="case-eyebrow">WHAT WAS DESIGNED</p><h2>Connect, mint, race and earn with on-chain assets.</h2></div><ul class="crocobit-list"><li>A wallet bar with network, BNB and USDT balances, the connected address and a disconnect action.</li><li>A persistent side navigation with Main, NFT, History and Team, and “Soon” markers for Game-Fi, Staking and Trading.</li><li>A main page with account information, a referral link with one-tap copy, an assets overview and recent history.</li><li>Asset cards for total income, game income, staking income, staked NFTs, team size, the active race timer and frozen tokens.</li><li>A Mystery NFT box: balance, amount selector with MAX, four hero classes, a clear total and a single Mint action.</li><li>A post-purchase “Status OK” screen with the transaction hash, referral link and a direct path into a race or farming.</li><li>A team page showing referral lines, completion progress per line and a table of team operations.</li><li>An operation history with timestamps, amounts and explorer links, plus an incentive program with progress per line.</li><li>Responsive layouts at 1940, 1440, 744 and 320 px, including a full-screen mobile menu.</li><li>A UI kit built on a 12-column grid with a defined type scale, colour styles and effects.</li></ul></section>
+        <section class="crocobit-stack reveal-on-scroll"><div><p class="case-eyebrow">TECHNOLOGY</p><h2>Built for BNB Smart Chain.</h2></div><div class="crocobit-stack-copy"><p>Solidity · Node.js · React · JavaScript · Web3</p><p>Blockchain: BSC</p></div></section>
+        <section class="crocobit-gallery" aria-label="CrocoBit project screens">
+          <div class="crocobit-gallery-heading reveal-on-scroll"><h2>CrocoBit in detail</h2></div>
+          ${Array.from({length:6}, (_, i) => { const n = i + 2; const descriptions = ['Mystery NFT box — choose a hero and mint','User main page — wallet, assets, history and incentive program','Team and operation history screens','Status OK — transaction hash, referral link and next step','Responsive dashboard and mobile menu','Visual language — colors, type scale and components']; return `<figure class="crocobit-shot reveal-on-scroll"><img src="./assets/cases/crocobit-case-${String(n).padStart(2,'0')}.webp" alt="CrocoBit project screen ${n}: ${descriptions[i]}" loading="lazy"></figure>`; }).join('')}
+        </section>`;
       document.querySelector('.case-overview').after(detail);
       document.querySelector('#case-image').loading = 'eager';
       document.querySelector('#case-image').decoding = 'async';
