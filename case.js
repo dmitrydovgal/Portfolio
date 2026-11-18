@@ -3,7 +3,7 @@
     { id:'beexpay', title:'BeeXpay', summary:'Crypto banking: cards, crypto assets, payments and eSIM', category:'PRODUCT DESIGN · FINTECH', image:'./assets/cases/beexpay-case-01.webp', alt:'BeeXpay landing page — crypto banking, cards, payments and eSIM' },
     { id:'eva-dex', title:'EVADEX', summary:'Web3 platform for DEX trading', category:'WEB3 · DEX TRADING', image:'./assets/cases/evadex-case-01.webp', alt:'EVADEX multi-chain DEX trading platform homepage and dashboard' },
     { id:'superearn', title:'SuperEarn App', summary:'Non-custodial, multichain, portal to decentralized finance and SUPER app.', category:'MULTICHAIN APP', image:'./assets/cases/superearn-project-01.webp', alt:'SuperEarn wallet onboarding and portfolio screens' },
-    { id:'deepden', title:'DeepDen', summary:'Chat, call and create with any AI girlfriend', category:'WEB SERVICES', image:'./assets/cases/deepden-03.webp', alt:'DeepDen AI companion platform' },
+    { id:'splitbill', title:'Split Bill', summary:'Telegram Mini App for splitting restaurant bills with friends — scan a receipt, pick your items and track who has paid.', category:'TELEGRAM MINI APP · PRODUCT DESIGN', image:'./assets/cases/splitbill-case-01.webp', alt:'Split Bill Telegram Mini App — home, shared bill and bill summary screens' },
     { id:'crocobit', title:'CrocoBit', summary:'Crypto-trading GameFi platform', category:'GAMEFI PLATFORM', image:'./assets/cases/crocobit-01.webp', alt:'CrocoBit crypto trading GameFi website' },
     { id:'artbot', title:'ArtBot', summary:'AI LegalTech platform for legal and migration support', category:'AI · LEGALTECH', image:'./assets/cases/artbot-case-01.webp', alt:'ArtBot AI LegalTech platform homepage and assistant interface' }
   ];
@@ -15,17 +15,17 @@
   const projectFactData = {
     'eva-dex': { scope:'DEX product experience, trading dashboards and multi-chain workflows', status:'Product design case', timeline:'1 month', outcome:'A unified workspace for token discovery, market analysis, portfolio tracking and trade automation.', metrics:[['+21%','reach growth'],['+14%','engagement growth'],['+11%','conversion growth']] },
     'superearn': { scope:'Non-custodial DeFi app and responsive product website', status:'Live product link · design case', timeline:'2 months', outcome:'A connected journey across yield discovery, staking, swaps, bridges and portfolio management.', metrics:[['+16%','reach growth'],['+13%','engagement growth'],['+8%','activation growth']] },
-    deepden: { scope:'AI companion web experience and conversational interface', status:'Design case', timeline:'8 weeks', outcome:'A concept for bringing AI chat, calls and creative interaction into one experience.', metrics:[['+19%','reach growth'],['+11%','engagement growth'],['+10%','conversion growth']] },
+    splitbill: { scope:'Telegram Mini App: receipt upload and OCR, item selection, payment tracking, invitations', status:'MVP · design and front-end', timeline:'Nov 2026', outcome:'A calm seven-screen flow that turns a restaurant receipt into a shared bill where everyone sees exactly what they owe.', metricsLabel:'At a glance', metrics:[['7','core screens'],['3','OCR languages'],['0','money held by the app']] },
     crocobit: { scope:'GameFi platform, NFT collection and token-based features', status:'Live website · GameFi design case', timeline:'3 months', outcome:'A connected product concept linking NFT collecting, racing gameplay and token rewards.', metrics:[['+23%','reach growth'],['+15%','engagement growth'],['+12%','conversion growth']] },
     artbot: { scope:'AI LegalTech MVP, assistant chat and specialist handoff flows', status:'MVP design concept', timeline:'2 months', outcome:'A clear service flow from AI guidance and document preparation to specialist support.', metrics:[['+17%','reach growth'],['+12%','engagement growth'],['+9%','conversion growth']] },
     beexpay: { metrics:[['+18%','reach growth'],['+12%','engagement growth'],['+9%','activation growth']] }
   };
   const metricsMarkup = (metrics) => metrics.map(([value, label]) => `<span><strong>${value}</strong><small>${label}</small></span>`).join('');
-  const createProjectFacts = ({scope, status, timeline, outcome, metrics}) => {
+  const createProjectFacts = ({scope, status, timeline, outcome, metrics, metricsLabel = 'Launch results'}) => {
     const section = document.createElement('section');
     section.className = 'project-facts reveal-on-scroll';
     section.setAttribute('aria-label', 'Role and project facts');
-    section.innerHTML = `<div class="project-facts-heading"><p class="case-eyebrow">MY ROLE & PROJECT FACTS</p><h2>From product thinking to a connected experience.</h2></div><dl class="project-fact-list"><div><dt>My role</dt><dd>Product & UX/UI design</dd></div><div><dt>Scope</dt><dd>${scope}</dd></div><div><dt>Timeline</dt><dd>${timeline}</dd></div><div><dt>Project status</dt><dd>${status}</dd></div><div class="project-fact-wide"><dt>Design outcome</dt><dd>${outcome}</dd></div><div class="project-fact-wide"><dt>Launch results</dt><dd class="project-metric-list">${metricsMarkup(metrics)}</dd></div></dl>`;
+    section.innerHTML = `<div class="project-facts-heading"><p class="case-eyebrow">MY ROLE & PROJECT FACTS</p><h2>From product thinking to a connected experience.</h2></div><dl class="project-fact-list"><div><dt>My role</dt><dd>Product & UX/UI design</dd></div><div><dt>Scope</dt><dd>${scope}</dd></div><div><dt>Timeline</dt><dd>${timeline}</dd></div><div><dt>Project status</dt><dd>${status}</dd></div><div class="project-fact-wide"><dt>Design outcome</dt><dd>${outcome}</dd></div><div class="project-fact-wide"><dt>${metricsLabel}</dt><dd class="project-metric-list">${metricsMarkup(metrics)}</dd></div></dl>`;
     return section;
   };
   if (!project) {
@@ -294,6 +294,35 @@
         <section class="artbot-gallery" aria-label="ArtBot project screens">
           <div class="artbot-gallery-heading reveal-on-scroll"><h2>ArtBot in detail</h2></div>
           ${Array.from({length:6}, (_, i) => { const n = i + 2; const descriptions = ['AI assistant and legal workflow','User onboarding and consultation flow','Legal assistant chat and saved guidance','Document management and profile screens','Specialist support and platform modules','ArtBot platform interface overview']; return `<figure class="artbot-shot reveal-on-scroll"><img src="./assets/cases/artbot-case-${String(n).padStart(2,'0')}.webp" alt="ArtBot project screen ${n}: ${descriptions[i]}" loading="lazy"></figure>`; }).join('')}
+        </section>`;
+      document.querySelector('.case-overview').after(detail);
+      document.querySelector('#case-image').loading = 'eager';
+      document.querySelector('#case-image').decoding = 'async';
+      const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
+      }), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      detail.querySelectorAll('.reveal-on-scroll').forEach((el) => observer.observe(el));
+    }
+    if (project.id === 'splitbill') {
+      document.querySelector('meta[name="description"]').content = 'Split Bill case study: a Telegram Mini App that turns a restaurant receipt into a shared bill, with item selection and payment tracking for every guest.';
+      document.querySelector('meta[name="theme-color"]').content = '#FBFAF6';
+      const page = document.querySelector('#case-content');
+      page.classList.add('case-page--splitbill');
+      document.querySelector('#case-summary').textContent = 'A Telegram Mini App for splitting restaurant bills — scan a receipt, pick what you ate and see who has paid.';
+      document.querySelector('#case-caption').textContent = 'Split Bill — Telegram Mini App';
+      document.querySelector('#overview-title').textContent = 'Splitting the bill, without the awkward math';
+      document.querySelector('#overview-copy').textContent = 'Split Bill replaces calculators and “who owes what?” chats with one shared screen. One person uploads the receipt, friends join through an invitation, everyone taps the items they ordered, and the app keeps a clear total and payment status for the whole table.';
+      const detail = document.createElement('div');
+      detail.className = 'splitbill-details';
+      detail.innerHTML = `
+        <section class="splitbill-brief reveal-on-scroll">
+          <div><p class="case-eyebrow">THE CHALLENGE</p><h2>Make group payments feel effortless.</h2></div>
+          <div class="splitbill-brief-copy"><p>Group dinners usually end with a photo of the receipt, a calculator and a long chat thread. Shared dishes, drinks ordered “for the table” and different amounts per person make a simple payment surprisingly stressful.</p><p>The goal was a mobile-first Telegram Mini App that feels as light as a chat: fast to start, obvious to use for guests who open it once, and honest about money — it only tracks who owes what and never holds funds.</p></div>
+        </section>
+        <section class="splitbill-deliverables reveal-on-scroll"><div><p class="case-eyebrow">WHAT WAS DESIGNED</p><h2>From a photo of a receipt to a settled table.</h2></div><ul class="splitbill-list"><li>A seven-screen core flow: home, upload, processing, review, shared bill, my share and bill summary.</li><li>Receipt upload with a demo receipt and on-device recognition in English, Russian and Ukrainian.</li><li>A review step to correct names, quantities and prices before the bill is created.</li><li>A shared bill where every guest taps the items they ordered; shared dishes are split between several people.</li><li>A personal summary with a running total and a one-tap “Mark as paid”.</li><li>A group overview with total, allocated and unallocated amounts, and payment progress.</li><li>Friend invitations with links and QR codes, plus a bills list, profile, statistics and settings.</li><li>A warm visual language — coral, butter and ink on cream, set in Inter — with loading, error and empty states for every data screen.</li><li>A “Direct Pay” principle: guests transfer money to each other, and Split Bill only tracks statuses.</li></ul></section>
+        <section class="splitbill-gallery" aria-label="Split Bill project screens">
+          <div class="splitbill-gallery-heading reveal-on-scroll"><h2>Split Bill in detail</h2></div>
+          ${Array.from({length:6}, (_, i) => { const n = i + 2; const descriptions = ['Creating a bill in three taps','Review receipt — checking recognized items','Shared bill, personal summary and group overview','The complete seven-screen flow','Visual language, colors, typography and components','My share and group overview']; return `<figure class="splitbill-shot reveal-on-scroll"><img src="./assets/cases/splitbill-case-${String(n).padStart(2,'0')}.webp" alt="Split Bill project screen ${n}: ${descriptions[i]}" loading="lazy"></figure>`; }).join('')}
         </section>`;
       document.querySelector('.case-overview').after(detail);
       document.querySelector('#case-image').loading = 'eager';
