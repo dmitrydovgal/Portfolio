@@ -35,7 +35,7 @@
 .project-open{transition:opacity .4s var(--ease),transform .5s var(--ease),background-color .25s ease,color .25s ease}
 .project:hover .project-open,.project-open:hover,.project-open:focus-visible{background:#3239F1;color:#fff}
 
-.contact-section{display:grid;grid-template-columns:minmax(0,1fr) minmax(340px,.82fr);gap:clamp(48px,10vw,180px);align-items:start;margin:0 10px 10px;padding:clamp(64px,9vw,132px) clamp(30px,5.2vw,100px);border-radius:32px;background:#f3f3f5}
+.contact-section{display:grid;grid-template-columns:minmax(0,1fr) minmax(340px,.82fr);gap:clamp(48px,10vw,180px);align-items:start;margin:0 var(--page-pad) 10px;padding:clamp(64px,9vw,132px) clamp(30px,5.2vw,100px);border-radius:32px;background:#f3f3f5}
 .contact-copy{max-width:650px}
 .contact-eyebrow{margin:0 0 26px;color:#77777d;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
 .contact-copy h2{margin:0;font:500 clamp(54px,8vw,112px)/.9 Manrope,"DM Sans",sans-serif;letter-spacing:-.075em}
@@ -51,6 +51,6 @@
 .contact-links>a>i{justify-self:end;font-size:17px;font-style:normal;transition:transform .35s var(--ease)}
 .contact-links>a:hover{color:#3239F1}
 .contact-links>a:hover>i{transform:translate(3px,-3px)}
-@media(max-width:760px){.contact-section{grid-template-columns:1fr;gap:44px;margin:0 10px 10px;padding:54px 24px;border-radius:24px}.contact-eyebrow{margin-bottom:20px}.contact-copy h2{font-size:clamp(58px,13vw,84px)}.contact-copy>p:last-child{margin-top:20px}.contact-links{padding-top:0}.contact-links>a{grid-template-columns:22px 68px minmax(0,1fr) 18px;gap:10px;padding:17px 0}.contact-links>a>span{font-size:11px}.contact-links>a>strong{font-size:14px}}
+@media(max-width:760px){.contact-section{grid-template-columns:1fr;gap:44px;margin:0 var(--page-pad) 10px;padding:54px 24px;border-radius:24px}.contact-eyebrow{margin-bottom:20px}.contact-copy h2{font-size:clamp(58px,13vw,84px)}.contact-copy>p:last-child{margin-top:20px}.contact-links{padding-top:0}.contact-links>a{grid-template-columns:22px 68px minmax(0,1fr) 18px;gap:10px;padding:17px 0}.contact-links>a>span{font-size:11px}.contact-links>a>strong{font-size:14px}}
 
 
