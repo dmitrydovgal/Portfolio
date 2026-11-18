@@ -295,7 +295,7 @@
         <section class="artbot-deliverables reveal-on-scroll"><div><p class="case-eyebrow">WHAT WAS DESIGNED</p><h2>From an AI answer to a specialist handoff.</h2></div><ul class="artbot-list"><li>MVP technical architecture focused on AI consultations and automated request handling.</li><li>AI assistant for free guidance on legal and migration questions.</li><li>AI chat with conversation history, language switching, response-delay indicator and LLM error handling.</li><li>Persistent legal disclaimer explaining that AI responses are not legal advice.</li><li>Option to save an AI response as a step-by-step checklist in the user profile.</li><li>Admin tools to manage the AI knowledge base in JSON and Markdown formats.</li><li>RAG architecture connecting the knowledge base to the AI assistant.</li><li>Email and phone registration with OTP verification.</li><li>User account with questionnaire, profile and document area.</li><li>Document uploads with format checks, size limits, secure storage and presigned URLs.</li><li>“Do it for me” action to send a request to a specialist.</li><li>amoCRM integration for lead creation, status sync and retry after failures.</li><li>Web push notifications when a request status changes.</li><li>Admin panel for managing users, documents, leads and statuses.</li><li>Admin roles, 2FA, RBAC and audit trail.</li><li>GDPR controls for consent, version history, deletion requests and automatic removal of inactive profiles.</li><li>Security requirements covering TLS, encryption, protected links, logging and access control.</li><li>DevOps architecture with Dev, Staging and Prod environments, CI/CD, monitoring and logging.</li><li>Scalable roadmap for payments, PDF autofill, AI document validation and additional languages.</li></ul></section>
         <section class="artbot-gallery" aria-label="ArtBot project screens">
           <div class="artbot-gallery-heading reveal-on-scroll"><h2>ArtBot in detail</h2></div>
-          ${Array.from({length:7}, (_, i) => { const n = i + 2; const descriptions = ['AI assistant and legal workflow','User onboarding and consultation flow','Legal assistant chat and saved guidance','Document management and profile screens','Specialist support and platform modules','ArtBot platform interface overview']; return `<figure class="artbot-shot reveal-on-scroll"><img src="./assets/cases/artbot-case-${String(n).padStart(2,'0')}.webp" alt="ArtBot project screen ${n}: ${descriptions[i]}" loading="lazy"></figure>`; }).join('')}
+          ${Array.from({length:6}, (_, i) => { const n = i + 2; const descriptions = ['AI assistant and legal workflow','User onboarding and consultation flow','Legal assistant chat and saved guidance','Document management and profile screens','Specialist support and platform modules','ArtBot platform interface overview']; return `<figure class="artbot-shot reveal-on-scroll"><img src="./assets/cases/artbot-case-${String(n).padStart(2,'0')}.webp" alt="ArtBot project screen ${n}: ${descriptions[i]}" loading="lazy"></figure>`; }).join('')}
         </section>`;
       document.querySelector('.case-overview').after(detail);
       document.querySelector('#case-image').loading = 'eager';
@@ -345,6 +345,43 @@
         if (entry.isIntersecting) { entry.target.classList.add('is-visible'); factsObserver.unobserve(entry.target); }
       }), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
       factsObserver.observe(projectFacts);
+    }
+    if (project.id !== 'beexpay') {
+      // Tap-to-zoom viewer so detailed boards stay readable on phones.
+      const zoomImages = [document.querySelector('#case-image'), ...document.querySelectorAll('[class*="-shot"] img')].filter(Boolean);
+      const viewer = document.createElement('dialog');
+      viewer.className = 'zoom-viewer';
+      viewer.setAttribute('aria-label', `${project.title} images`);
+      viewer.innerHTML = '<div class="zoom-bar"><span class="zoom-count"></span><button class="zoom-close" type="button" aria-label="Close image">×</button></div><div class="zoom-scroll"><img alt="" /></div><div class="zoom-nav"><button class="zoom-prev" type="button" aria-label="Previous image">←</button><button class="zoom-next" type="button" aria-label="Next image">→</button></div>';
+      document.body.append(viewer);
+      const zoomImg = viewer.querySelector('img');
+      const zoomScroll = viewer.querySelector('.zoom-scroll');
+      const zoomCount = viewer.querySelector('.zoom-count');
+      let zoomIndex = 0;
+      const showZoom = (next) => {
+        zoomIndex = (next + zoomImages.length) % zoomImages.length;
+        const source = zoomImages[zoomIndex];
+        zoomImg.src = source.currentSrc || source.src;
+        zoomImg.alt = source.alt;
+        zoomCount.textContent = `${String(zoomIndex + 1).padStart(2, '0')} / ${String(zoomImages.length).padStart(2, '0')}`;
+        zoomScroll.scrollTo(0, 0);
+      };
+      zoomImages.forEach((image) => {
+        image.classList.add('zoom-trigger');
+        image.tabIndex = 0;
+        image.setAttribute('role', 'button');
+        image.setAttribute('aria-label', `View larger image: ${image.alt}`);
+        const open = () => { showZoom(zoomImages.indexOf(image)); viewer.showModal(); };
+        image.addEventListener('click', open);
+        image.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(); } });
+      });
+      viewer.querySelector('.zoom-close').addEventListener('click', () => viewer.close());
+      viewer.querySelector('.zoom-prev').addEventListener('click', () => showZoom(zoomIndex - 1));
+      viewer.querySelector('.zoom-next').addEventListener('click', () => showZoom(zoomIndex + 1));
+      viewer.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight') showZoom(zoomIndex + 1);
+        if (event.key === 'ArrowLeft') showZoom(zoomIndex - 1);
+      });
     }
     const previous = projects[(index - 1 + projects.length) % projects.length];
     const next = projects[(index + 1) % projects.length];

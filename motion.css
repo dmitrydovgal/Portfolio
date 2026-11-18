@@ -13,3 +13,4 @@
 .project-visual.motion-ready{isolation:isolate}
 .motion-managed .project-visual,.motion-managed .project-tags,.motion-managed .case-card-caption h2{will-change:transform,opacity}
 @media(prefers-reduced-motion:reduce){.scroll-thread{display:none}.motion-silk-canvas{animation:none}}
+html,body{overflow-x:clip}
