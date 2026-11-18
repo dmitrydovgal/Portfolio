@@ -401,3 +401,6 @@ body.theme-splitbill{--blue:#FF7751;background:#FBFAF6}
 .crocobit-shot img{box-shadow:0 24px 80px #19ff1114}
 .crocobit-gallery-heading h2{color:#f2f7f1}
 @media(prefers-reduced-motion:reduce){.crocobit-shot.reveal-on-scroll{opacity:1;transform:none}}
+
+.crocobit-gallery-heading .case-eyebrow{margin:0 0 14px}
+.crocobit-gallery--secondary{border-top:1px solid rgba(225,240,234,.14);margin-top:clamp(20px,4vw,60px)}
