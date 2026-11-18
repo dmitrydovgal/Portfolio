@@ -144,14 +144,9 @@
 .case-header .case-logo{display:flex;align-items:center;gap:0}
 .case-header .brand-mark-shell{position:relative;display:block;width:28px;height:28px;flex:0 0 28px}
 .case-header .brand-mark{position:absolute;inset:0;width:28px;height:28px;display:block;opacity:1;transition:opacity .24s ease}
-.case-header .brand-mark-animation{position:absolute;inset:0;opacity:0;transition:opacity .24s ease;pointer-events:none}
-.case-header .brand-mark-animation canvas{display:block;width:28px;height:28px}
-.case-header .case-logo[data-logo-ready="true"] .brand-mark{opacity:0}
-.case-header .case-logo[data-logo-ready="true"] .brand-mark-animation{opacity:1}
 .case-header .main-nav{display:flex;align-items:center;gap:40px;font-size:14px;font-weight:500}
 .case-header .main-nav a,.case-header .main-nav a:link,.case-header .main-nav a:visited,.case-header .main-nav a:active{color:var(--ink);text-decoration:none;transition:color .25s ease,opacity .25s ease}
 .case-header .main-nav a:hover{color:#345de8;opacity:1}
-@media(prefers-reduced-motion:reduce){.case-header .brand-mark-animation{display:none!important}.case-header .brand-mark{opacity:1!important}}
 @media(max-width:900px){.case-header{height:88px}.case-header .main-nav{gap:24px}}
 @media(max-width:640px){.case-header{height:72px;padding-inline:22px}.case-header .main-nav{gap:16px;font-size:12px}}
 
@@ -250,30 +245,6 @@ body.theme-artbot{--ink:#f4f5ff;--muted:#a9abc4;--blue:#625cff;color:var(--ink);
 @media(prefers-reduced-motion:reduce){.case-scroll-top{transition:none}}
 
 /* Shared contact panel on every case page. */
-.case-contact{--contact-accent:#3239f1;--contact-ink:var(--ink);--contact-muted:var(--muted);--contact-rule:rgba(25,28,31,.16);width:calc(100% - 2 * var(--pad));max-width:1672px;margin:0 auto 10px;padding:clamp(54px,7vw,100px) clamp(26px,5.2vw,88px);border-radius:32px;background:rgba(243,243,245,.88);color:var(--contact-ink)}
-.case-contact .contact-eyebrow{margin:0 0 26px;color:var(--contact-muted);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
-.case-contact .contact-copy{max-width:650px}
-.case-contact .contact-copy h2{margin:0;font:500 clamp(54px,7vw,100px)/.9 Manrope,"DM Sans",sans-serif;letter-spacing:-.075em;color:var(--contact-ink)}
-.case-contact .contact-copy>p:last-child{max-width:390px;margin:28px 0 0;color:var(--contact-muted);font-size:clamp(15px,1.3vw,18px);line-height:1.5}
-.case-contact .contact-links{display:grid;padding-top:10px}
-.case-contact .contact-links>a{display:grid;grid-template-columns:24px 90px minmax(0,1fr) 22px;align-items:center;gap:14px;padding:20px 0;border-bottom:1px solid var(--contact-rule);color:var(--contact-ink);transition:color .25s ease}
-.case-contact .contact-links>a:first-child{border-top:1px solid var(--contact-rule)}
-.case-contact .contact-links>a>span{color:var(--contact-muted);font-size:12px}
-.case-contact .contact-links>a>strong{min-width:0;overflow-wrap:anywhere;font-size:clamp(15px,1.3vw,18px);font-weight:400}
-.case-contact .contact-links>a>i{justify-self:end;font-size:17px;font-style:normal;transition:transform .35s var(--ease)}
-.case-contact .contact-links>a:hover{color:var(--contact-accent)}
-.case-contact .contact-links>a:hover>i{transform:translate(3px,-3px)}
-.case-contact .contact-icon{width:20px;height:20px;display:block;fill:currentColor;transition:transform .35s var(--ease)}
-.case-contact .contact-icon--brand{width:22px;height:22px}
-.case-contact .contact-links>a:hover .contact-icon{transform:scale(1.08)}
-.theme-crocobit .case-contact,.theme-artbot .case-contact,.theme-eva-dex .case-contact{--contact-ink:#f3f7f2;--contact-muted:#aeb8b1;--contact-rule:rgba(235,245,237,.18);background:rgba(255,255,255,.045);border:1px solid rgba(235,245,237,.12)}
-.theme-crocobit .case-contact{--contact-accent:#21ed4b}
-.theme-artbot .case-contact{--contact-ink:#f4f5ff;--contact-muted:#a9abc4;--contact-rule:rgba(232,234,255,.2);--contact-accent:#7772ff;border-color:rgba(232,234,255,.14)}
-.theme-eva-dex .case-contact{--contact-ink:#edf5f2;--contact-muted:#9aa9a3;--contact-rule:rgba(225,240,234,.18);--contact-accent:#16ae8d;border-color:rgba(225,240,234,.14)}
-.theme-beexpay .case-contact{--contact-accent:#8e7df3;background:rgba(255,255,255,.58)}
-.theme-superearn .case-contact{--contact-accent:#b28a00;background:rgba(255,255,255,.8)}
-.theme-deepden .case-contact{--contact-accent:#7165ff}
-@media(max-width:760px){.case-contact{grid-template-columns:1fr;gap:44px;margin-bottom:10px;padding:54px 24px;border-radius:24px}.case-contact .contact-eyebrow{margin-bottom:20px}.case-contact .contact-copy h2{font-size:clamp(58px,13vw,84px)}.case-contact .contact-copy>p:last-child{margin-top:20px}.case-contact .contact-links{padding-top:0}.case-contact .contact-links>a{grid-template-columns:22px 68px minmax(0,1fr) 18px;gap:10px;padding:17px 0}.case-contact .contact-links>a>span{font-size:11px}.case-contact .contact-links>a>strong{font-size:14px}}
 
 /* BeeXpay dark violet and orange visual theme. */
 body.theme-beexpay{--ink:#191c1f;--muted:#77777d;--blue:#8e7df3;color:var(--ink);background-color:#f4f1fa;background-image:radial-gradient(ellipse at 78% 17%,rgba(142,125,243,.16),transparent 40%),radial-gradient(ellipse at 12% 74%,rgba(255,158,95,.09),transparent 38%),linear-gradient(150deg,#faf8fd 0%,#f2eef9 56%,#f7f2fa 100%)}
@@ -363,3 +334,25 @@ body.theme-eva-dex{--ink:#edf5f2;--muted:#8f9d98;--blue:#16ae8d;--up-accent:#16a
 .beexpay-lightbox-prev:hover{transform:translate(-3px,-50%)}.beexpay-lightbox-next:hover{transform:translate(3px,-50%)}
 @media(max-width:700px){.beexpay-lightbox{width:100vw;height:100dvh;padding:70px 20px 58px;border-radius:0}.beexpay-lightbox-close{top:16px;right:16px}.beexpay-lightbox-arrow{top:auto;bottom:12px;transform:none}.beexpay-lightbox-prev{left:calc(50% - 58px)}.beexpay-lightbox-next{right:calc(50% - 58px)}.beexpay-lightbox-prev:hover,.beexpay-lightbox-next:hover{transform:translateY(-3px)}.beexpay-lightbox figure img{max-height:calc(100% - 48px)}.theme-beexpay .beexpay-shot::after{display:none}}
 @media(prefers-reduced-motion:reduce){.theme-beexpay .beexpay-shot img,.theme-beexpay #case-image{transition:none;transform:none}.theme-beexpay .beexpay-shot::after{transition:none}.beexpay-lightbox{transition:none}}
+
+/* Get in touch block — identical to the home page */
+.contact-section{display:grid;grid-template-columns:minmax(0,1fr) minmax(340px,.82fr);gap:clamp(48px,10vw,180px);align-items:start;margin:0 10px 10px;padding:clamp(64px,9vw,132px) clamp(30px,5.2vw,100px);border-radius:32px;background:#f3f3f5}
+.contact-copy{max-width:650px}
+.contact-eyebrow{margin:0 0 26px;color:#77777d;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.contact-copy h2{margin:0;font:500 clamp(54px,8vw,112px)/.9 Manrope,"DM Sans",sans-serif;letter-spacing:-.075em}
+.contact-copy>p:last-child{max-width:390px;margin:28px 0 0;color:#77777d;font-size:clamp(15px,1.3vw,18px);line-height:1.5}
+.contact-links{display:grid;padding-top:10px}
+.contact-links>a{display:grid;grid-template-columns:24px 90px minmax(0,1fr) 22px;align-items:center;gap:14px;padding:20px 0;border-bottom:1px solid rgba(25,28,31,.16);transition:color .25s ease}
+.contact-links>a:first-child{border-top:1px solid rgba(25,28,31,.16)}
+.contact-icon{width:20px;height:20px;display:block;fill:currentColor;transition:transform .35s var(--ease)}
+.contact-icon--brand{width:22px;height:22px}
+.contact-links>a:hover .contact-icon{transform:scale(1.08)}
+.contact-links>a>span{color:#77777d;font-size:12px}
+.contact-links>a>strong{min-width:0;overflow-wrap:anywhere;font-size:clamp(15px,1.3vw,18px);font-weight:400}
+.contact-links>a>i{justify-self:end;font-size:17px;font-style:normal;transition:transform .35s var(--ease)}
+.contact-links>a:hover{color:#3239F1}
+.contact-links>a:hover>i{transform:translate(3px,-3px)}
+@media(max-width:760px){.contact-section{grid-template-columns:1fr;gap:44px;margin:0 10px 10px;padding:54px 24px;border-radius:24px}.contact-eyebrow{margin-bottom:20px}.contact-copy h2{font-size:clamp(58px,13vw,84px)}.contact-copy>p:last-child{margin-top:20px}.contact-links{padding-top:0}.contact-links>a{grid-template-columns:22px 68px minmax(0,1fr) 18px;gap:10px;padding:17px 0}.contact-links>a>span{font-size:11px}.contact-links>a>strong{font-size:14px}}
+.contact-section{color:#191c1f}
+.contact-section a{color:inherit;text-decoration:none}
+.contact-section h2{color:#191c1f}
