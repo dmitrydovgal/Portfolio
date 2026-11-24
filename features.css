@@ -114,3 +114,11 @@ dialog[open] a,dialog[open] a *,dialog[open] button,dialog[open] button *,body.h
 .about-main .about-socials{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-top:6px}
 .about-socials a{padding:8px 10px;border:1px solid transparent;border-radius:999px;transition:background-color .25s ease,color .25s ease,border-color .25s ease}
 .about-socials a:hover,.about-socials a:focus-visible{background:#3239F1;border-color:#3239F1;color:#fff!important;outline:none}
+
+/* CV: outlined full-width button pinned to the bottom of the left column */
+.about-grid{align-items:stretch}
+.about-main{display:flex;flex-direction:column}
+.about-main .about-cv{margin-top:auto;display:flex;align-items:center;justify-content:center;width:100%;padding:15px 20px;border:1px solid #191c1f;border-radius:999px;font-size:14px;font-weight:500;color:#191c1f;transition:background-color .25s ease,color .25s ease,border-color .25s ease}
+.about-main .about-cv:hover,.about-main .about-cv:focus-visible{background:#3239F1;border-color:#3239F1;color:#fff;outline:none}
+.about-main .about-socials{margin-bottom:24px}
+@media(max-width:900px){.about-main .about-cv{margin-top:24px}}
